@@ -1,21 +1,22 @@
 // Assignment code here
 
 // Potential character arrays
-var lowerArr = ["q" , "w" , "e" , "r" , "t" , "y" , "u" , "i" , "o" , "p" , "a" , "s" , "d" , "f" , " g" , "h" , "j" , "k" , "l" , "z" , "x" , "c" , "v" , "b" , "n" , "m"]
-var upperArr = lowerArr.map(char => char.toUpperCase());
-var numArr = ["1" , "2" , "3" , "4" , "5", "6" , "7" , "8" , "9" , "0"];
-var specialArr = ["!" , "@" , "#" , "$" , "%" , "^" , "&" , "*" , "(" , ")" , "_" , "-" , "=" , "+" , "{" , "[" , "}" , "]" , ";" , ":" , "," , "<" , "." , ">" , "/" , "?"]
-var critArr =[];
+var lower = "qwertyuiopasdfghjklzxcvbnm";
+var upper = lower.toUpperCase();
+var num = "1234567890";
+var special = "`~!@#$%^&*()_+-={[}]:;<,>.?/"
+var crit = "";
 
 // Function used to create password
 var generatePassword = function() {
+  var password = "";
     //Prompts put to user to discover required characters
-  var length = window.prompt(`Please select a length for your password. (8-128 characters long)`);
+  var charLength = window.prompt(`Please select a length for your password. (8-128 characters long)`);
 
   //Logic converting input to integer, and preventing user from inputting an invalid response
-  var length = parseInt(length);
-  console.log(length);
-  if (length < 8 || length > 128 || isNaN(length)) {
+  var charLength = parseInt(charLength);
+  console.log(charLength);
+  if (charLength < 8 || charLength > 128 || isNaN(charLength)) {
     window.alert(`Please enter a proper response.`);
     return generatePassword();
   } else {
@@ -28,24 +29,28 @@ var generatePassword = function() {
 
   //Creates logic for user input criteria
   if (lowerCrit) {
-    critArr = critArr.concat(lowerArr);
-    console.log(critArr);
+    crit = crit.concat(lower);
   }
 
   if (upperCrit) {
-    critArr = critArr.concat(upperArr);
-    console.log(critArr);
+    crit = crit.concat(upper);
   }
 
   if (numCrit) {
-    critArr = critArr.concat(numArr);
-    console.log(critArr);
+    crit = crit.concat(num);
   }
 
   if (specialCrit) {
-    critArr = critArr.concat(specialArr);
-    console.log(critArr);
+    crit = crit.concat(special);
   }
+
+  //Generates password
+  for ( i = 0; i < charLength; i++) {
+    password += crit.charAt(
+      Math.floor(Math.random() * crit.length + 1)
+    );
+  }
+  return password;
 }
 
 // Get references to the #generate element
